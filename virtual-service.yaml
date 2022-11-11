@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: minio-s3
+  namespace: neon-system
+spec:
+  gateways:
+    - neon-ingress/neoncluster-gateway
+  hosts:
+    - minio.18e7-091a-7bb4-d81e.neoncluster.io
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: minio-neon.neon-system.svc.cluster.local
+            port:
+              number: 80
